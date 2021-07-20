@@ -12,16 +12,14 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    head 204 and return if @user.update(user_params)
+
+    render json: @user.errors, status: :unprocessable_entity
   end
 
   def login
     @user = User.find_by(email: params[:email])
-     if @user && @user.authenticate(params[:password])
+    if @user && @user.authenticate(params[:password])
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, token: token }, status: 200
     else
@@ -38,5 +36,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password)
   end
-
 end

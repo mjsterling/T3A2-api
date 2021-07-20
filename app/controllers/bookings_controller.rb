@@ -1,5 +1,4 @@
 class BookingsController < ApplicationController
-
   def index
     @booking = Booking.all
     pp @booking
@@ -13,6 +12,7 @@ class BookingsController < ApplicationController
 
   def create
     @booking = Booking.new(booking_params)
+    @booking.room = Room.find_by(number: params[:booking][:room_number])
     if @booking.save!
       render json: @booking, status: 201
     else
@@ -22,11 +22,9 @@ class BookingsController < ApplicationController
 
   def update
     @booking = Booking.find(params[:id])
-    if @booking.update(booking_params)
-      head 204 and return
-    else
-      render json: @booking.errors, status: :unprocessable_entity
-    end
+    head 204 and return if @booking.update(booking_params)
+
+    render json: @booking.errors, status: :unprocessable_entity
   end
 
   private
@@ -34,5 +32,4 @@ class BookingsController < ApplicationController
   def booking_params
     params.require(:booking).permit(:first_name, :last_name, :email_address, :phone_number, :num_adults, :num_children, :num_dogs, :dates, request_ids: [])
   end
-
 end

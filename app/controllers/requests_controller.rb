@@ -1,5 +1,4 @@
 class RequestsController < ApplicationController
-
   def index
     @request = Request.all
     render json: @request, status: 200
@@ -38,5 +37,4 @@ class RequestsController < ApplicationController
   def request_params
     params.require(:request).permit(:first_name, :last_name, :email_address, :phone_number, :num_adults, :num_children, :num_dogs, :dates, :archived, :reference_number)
   end
-
 end

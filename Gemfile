@@ -47,3 +47,5 @@ gem "figaro", "~> 1.2"
 gem "rspec-rails", "~> 5.0"
 
 gem "bcrypt", "~> 3.1"
+
+gem "solargraph", "~> 0.42.4"
