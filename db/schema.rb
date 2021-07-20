@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_07_18_071243) do
   enable_extension "plpgsql"
 
   create_table "bookings", force: :cascade do |t|
+    t.bigint "room_id"
     t.string "first_name"
     t.string "last_name"
     t.string "email_address"
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_07_18_071243) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "request_id"
     t.index ["request_id"], name: "index_bookings_on_request_id"
+    t.index ["room_id"], name: "index_bookings_on_room_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -61,4 +63,5 @@ ActiveRecord::Schema.define(version: 2021_07_18_071243) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "bookings", "rooms"
 end
