@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
 
   def index
     @booking = Booking.all
+    pp @booking
     render json: @booking, status: 200
   end
 
@@ -13,7 +14,7 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(booking_params)
     if @booking.save!
-      render json @booking, status: 201
+      render json: @booking, status: 201
     else
       render json: @booking.errors, status: :unprocessable_entity
     end

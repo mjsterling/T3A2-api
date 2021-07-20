@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/bookings', to: 'bookings#create'
   patch '/bookings/:id', to: 'bookings#update'
 
-  get 'rooms', to: 'rooms#index'
+  get '/rooms', to: 'rooms#index'
   get '/rooms/:id', to: 'rooms#show'
   post '/rooms', to: 'rooms#create'
   patch '/rooms/:id', to: 'rooms#update'
