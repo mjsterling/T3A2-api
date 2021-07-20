@@ -1,5 +1,5 @@
 describe "users", type: :request do
-    describe "users#create" do
+    describe "#create" do
       before(:example) do
         post "/users", params: { user: { email: "admin@email.com", password: "123456" } }
       end
@@ -16,7 +16,7 @@ describe "users", type: :request do
       end
     end
   
-    describe "POST /login" do
+    describe "#login" do
       before(:example) do
         create_user
         post "/login", params: { email: "admin@email.com", password: "123456" }
@@ -37,7 +37,7 @@ describe "users", type: :request do
       end
     end
   
-    describe "users#update" do
+    describe "#update" do
     before(:example) do
         create_user
         token = login_user

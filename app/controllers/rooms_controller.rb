@@ -1,6 +1,11 @@
 class RoomsController < ApplicationController
   def index
-    @room = Room.all
+    @room = Room.all.map do |room|
+      return {
+        **room.as_json,
+        bookings: room.bookings.as_json
+      }
+    end
     render json: @room, status: 200
   end
 
@@ -12,7 +17,7 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     if @room.save!
-      render json @room, status: 201
+      render json: @room, status: 201
     else
       render json: @room.errors, status: :unprocessable_entity
     end
@@ -30,7 +35,7 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:capacity, :peak_rate, :offpeak_rate, booking_ids: [])
+    params.require(:room).permit(:number, :capacity, :peak_rate, :offpeak_rate, booking_ids: [])
   end
 
 end
