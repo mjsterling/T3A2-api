@@ -6,12 +6,13 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
+    head 404 and return if @booking == nil
     render json: @booking, status: 200
   end
 
   def create
     @booking = Booking.new(booking_params)
-    @booking.dates = params[:booking][:dates].map { |date| Date.parse(date) }.uniq
+    @booking.dates = parse_dates params[:booking][:dates]
     @booking.room = Room.find_by number: params[:booking][:room_number]
     if @booking.save!
       render json: @booking, status: 201
@@ -22,10 +23,21 @@ class BookingsController < ApplicationController
 
   def update
     @booking = Booking.find(params[:id])
-    @booking.dates = params[:booking][:dates].map { |date| Date.parse(date) }.uniq if params[:booking][:dates]
+    head 404 and return if @booking == nil
+    @booking.dates = parse_dates params[:booking][:dates]
     head 204 and return if @booking.update(booking_params)
 
     render json: @booking.errors, status: :unprocessable_entity
+  end
+
+  def delete
+    begin
+      @booking = Booking.find(params[:id])
+    rescue
+      head 404 and return
+    end
+    head 204 and return if @booking.destroy!
+    render json: @booking.errors
   end
 
   private

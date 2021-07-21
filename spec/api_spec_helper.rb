@@ -22,3 +22,13 @@ def create_booking(token, room_number = 1)
                       },
                     }, headers: { Authorization: "Bearer #{token}" }
 end
+
+def create_request
+  post "/requests", params: {
+                      request: {
+                        :first_name => "John", :last_name => "Doe", :email_address => "john.doe@email.com",
+                        :phone_number => "+61421864667", :num_adults => "1", :num_children => "2", :num_dogs => "1",
+                        :dates => [Date.new(2021, 7, 15), Date.new(2021, 7, 16), Date.new(2021, 7, 17)],
+                      },
+                    }
+end

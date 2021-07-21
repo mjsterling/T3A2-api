@@ -5,7 +5,12 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room = Room.find_by number: params[:id]
+    begin
+      @room = Room.find_by number: params[:id]
+    rescue
+      head 404 and return
+    end
+
     render json: room_with_bookings, status: 200
   end
 
@@ -19,7 +24,11 @@ class RoomsController < ApplicationController
   end
 
   def update
-    @room = Room.find_by number: params[:id]
+    begin
+      @room = Room.find_by number: params[:id]
+    rescue
+      head 404 and return
+    end
     head 204 and return if @room.update room_params
     render json: @room.errors, status: :unprocessable_entity
   end

@@ -1,30 +1,59 @@
 class RequestsController < ApplicationController
+  skip_before_action :authorized, except: [:index]
+
   def index
     @request = Request.all
     render json: @request, status: 200
   end
 
   def show
-    @request = Request.find(params[:id])
+    if !params[:id].match(/\D/) && logged_in?
+      @request = Request.find params[:id]
+    else
+      @request = Request.find_by reference_number: params[:id]
+    end
+    head 404 and return if @request == nil
     render json: @request, status: 200
   end
 
   def create
     @request = Request.new(request_params)
+    @request.dates = parse_dates params[:request][:dates]
+    @request.reference_number = generate_reference_number
     if @request.save!
-      render json @request, status: 201
+      render json: @request, status: 201
     else
       render json: @request.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    @request = Request.find(params[:id])
-    if @request.update(request_params)
-      head 204 and return
+    if !params[:id].match(/\D/) && logged_in?
+      @request = Request.find params[:id]
     else
-      render json: @request.errors, status: :unprocessable_entity
+      @request = Request.find_by reference_number: params[:id]
     end
+    head 404 and return if @request == nil
+    @request.dates = parse_dates(params[:request][:dates]) if params[:request][:dates]
+
+    head 204 and return if @request.update(request_params)
+    render json: @request.errors, status: :unprocessable_entity
+  end
+
+  def delete
+    begin
+      if !params[:id].match(/\D/) && logged_in?
+        @request = Request.find params[:id]
+      else
+        @request = Request.find_by reference_number: params[:id]
+      end
+    rescue
+      head 404 and return
+    end
+
+    head 204 and return if @request.destroy!
+
+    render json: @request.errors
   end
 
   private

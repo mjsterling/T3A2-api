@@ -37,4 +37,8 @@ class ApplicationController < ActionController::API
   def authorized
     render json: { message: "Please log in" }, status: :unauthorized unless logged_in?
   end
+
+  def parse_dates(dates)
+    dates.map { |date| Date.parse(date) }.uniq
+  end
 end

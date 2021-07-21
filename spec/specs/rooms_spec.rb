@@ -30,7 +30,7 @@ describe "rooms", type: :request do
     it "should return the room's bookings" do
       data = JSON.parse response.body
       expect(data[0]["bookings"].length).to eq(3)
-      expect(data[0]["bookings"][0]["first_name"]).to eq("John")
+      expect(data[0]["bookings"][0]["first_name"]).to eq "John"
     end
   end
 
@@ -45,7 +45,7 @@ describe "rooms", type: :request do
       expect(data["number"]).to eq(1)
       expect(data["peak_rate"]).to eq(100)
       expect(data["bookings"].length).to eq(3)
-      expect(data["bookings"][0]["first_name"]).to eq("John")
+      expect(data["bookings"][0]["first_name"]).to eq "John"
     end
   end
 
