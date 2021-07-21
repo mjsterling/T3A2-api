@@ -25,10 +25,8 @@ ActiveRecord::Schema.define(version: 2021_07_20_075117) do
     t.bigint "num_dogs"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "request_id"
     t.date "dates", default: [], array: true
     t.bigint "room_id"
-    t.index ["request_id"], name: "index_bookings_on_request_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -63,5 +61,4 @@ ActiveRecord::Schema.define(version: 2021_07_20_075117) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
-
 end

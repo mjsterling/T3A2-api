@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
   def index
     @booking = Booking.all
-    pp @booking
     render json: @booking, status: 200
   end
 
@@ -12,7 +11,8 @@ class BookingsController < ApplicationController
 
   def create
     @booking = Booking.new(booking_params)
-    @booking.room = Room.find_by(number: params[:booking][:room_number])
+    @booking.dates = params[:booking][:dates].map { |date| Date.parse(date) }.uniq
+    @booking.room = Room.find_by number: params[:booking][:room_number]
     if @booking.save!
       render json: @booking, status: 201
     else
@@ -22,6 +22,7 @@ class BookingsController < ApplicationController
 
   def update
     @booking = Booking.find(params[:id])
+    @booking.dates = params[:booking][:dates].map { |date| Date.parse(date) }.uniq if params[:booking][:dates]
     head 204 and return if @booking.update(booking_params)
 
     render json: @booking.errors, status: :unprocessable_entity

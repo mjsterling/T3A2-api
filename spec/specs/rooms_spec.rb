@@ -33,4 +33,38 @@ describe "rooms", type: :request do
       expect(data[0]["bookings"][0]["first_name"]).to eq("John")
     end
   end
+
+  describe "#show" do
+    it "should return a specific room and its bookings" do
+      create_user
+      token = login_user
+      create_room token
+      3.times { create_booking token }
+      get "/rooms/1", headers: { Authorization: "Bearer #{token}" }
+      data = JSON.parse response.body
+      expect(data["number"]).to eq(1)
+      expect(data["peak_rate"]).to eq(100)
+      expect(data["bookings"].length).to eq(3)
+      expect(data["bookings"][0]["first_name"]).to eq("John")
+    end
+  end
+
+  describe "#update" do
+    it "should update a room's details and return a 204" do
+      create_user
+      token = login_user
+      create_room token
+      3.times { create_booking token }
+      get "/rooms/1", headers: { Authorization: "Bearer #{token}" }
+      data = JSON.parse response.body
+      patch "/rooms/1", params: { room: {
+                          **data,
+                          peak_rate: 120,
+                        } }, headers: { Authorization: "Bearer #{token}" }
+      expect(response.status).to eq(204)
+      get "/rooms/1", headers: { Authorization: "Bearer #{token}" }
+      data = JSON.parse response.body
+      expect(data["peak_rate"]).to eq(120)
+    end
+  end
 end
