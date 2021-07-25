@@ -59,11 +59,11 @@ class RequestsController < ApplicationController
   private
 
   def generate_reference_number
-    char_array = (0..9).to_a + ("a".."z").to_a
+    char_array = (0..9).to_a + ("A".."Z").to_a
     ref_number = char_array.sample(10).join
   end
 
   def request_params
-    params.require(:request).permit(:first_name, :last_name, :email_address, :phone_number, :num_adults, :num_children, :num_dogs, :dates, :archived, :reference_number)
+    params.require(:request).permit(:first_name, :last_name, :email_address, :phone_number, :num_adults, :num_children, :num_dogs, :dates, :reference_number)
   end
 end

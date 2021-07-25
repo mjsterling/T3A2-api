@@ -49,3 +49,5 @@ gem "rspec-rails", "~> 5.0"
 gem "bcrypt", "~> 3.1"
 
 gem "solargraph", "~> 0.42.4"
+
+gem "rack-cors", "~> 1.1"
