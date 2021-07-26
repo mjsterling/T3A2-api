@@ -1,13 +1,16 @@
 class BookingsController < ApplicationController
   def index
     @booking = Booking.all
+    @booking = @booking.map do |booking|
+      bookingObj = { **booking.as_json, room_number: booking.room.number }
+    end
     render json: @booking, status: 200
   end
 
   def show
     @booking = Booking.find(params[:id])
     head 404 and return if @booking == nil
-    render json: @booking, status: 200
+    render json: { **@booking.as_json, room_number: @booking.room.number }, status: 200
   end
 
   def create

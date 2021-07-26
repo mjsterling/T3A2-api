@@ -60,7 +60,7 @@ class RequestsController < ApplicationController
 
   def generate_reference_number
     char_array = (0..9).to_a + ("A".."Z").to_a
-    ref_number = char_array.sample(10).join
+    ref_number = char_array.sample(6).join
   end
 
   def request_params
