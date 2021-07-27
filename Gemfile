@@ -42,7 +42,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "jwt", "~> 2.2"
 
-gem "figaro", "~> 1.2"
 
 gem "rspec-rails", "~> 5.0"
 

@@ -1,1 +1,0 @@
-Figaro.require_keys("jwt_key")
