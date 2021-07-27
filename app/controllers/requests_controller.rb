@@ -7,7 +7,7 @@ class RequestsController < ApplicationController
   end
 
   def show
-    if !params[:id].match(/\D/) && logged_in?
+    if !params[:id].match(/\D/)
       @request = Request.find params[:id]
     else
       @request = Request.find_by reference_number: params[:id]
@@ -28,7 +28,7 @@ class RequestsController < ApplicationController
   end
 
   def update
-    if !params[:id].match(/\D/) && logged_in?
+    if !params[:id].match(/\D/)
       @request = Request.find params[:id]
     else
       @request = Request.find_by reference_number: params[:id]
@@ -42,7 +42,7 @@ class RequestsController < ApplicationController
 
   def delete
     begin
-      if !params[:id].match(/\D/) && logged_in?
+      if !params[:id].match(/\D/)
         @request = Request.find params[:id]
       else
         @request = Request.find_by reference_number: params[:id]
