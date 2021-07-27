@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_075117) do
+ActiveRecord::Schema.define(version: 2021_07_27_123919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2021_07_20_075117) do
     t.bigint "num_adults"
     t.bigint "num_children"
     t.bigint "num_dogs"
-    t.boolean "archived"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "reference_number"
@@ -61,4 +60,5 @@ ActiveRecord::Schema.define(version: 2021_07_20_075117) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
+
 end
